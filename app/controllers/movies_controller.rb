@@ -7,7 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index
- 
+    session.clear
     @all_ratings = Movie.all_ratings
     redir = false
 
