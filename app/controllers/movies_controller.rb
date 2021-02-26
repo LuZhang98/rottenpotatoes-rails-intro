@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
+    @ratings_to_show = []
 
     if params[:ratings] == nil
       if session[:ratings] == nil
