@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
+    redir = false
 
     if params[:sort] == nil && session[:sort] == nil
       @sort == nil
@@ -17,6 +18,7 @@ class MoviesController < ApplicationController
     
     if params[:sort] != session[:sort]
       session[:sort] = @sort
+      redir = true
     end
 
     if @sort == 'title'
@@ -35,13 +37,17 @@ class MoviesController < ApplicationController
 
     else
       @checked_ratings = params[:ratings] || session[:ratings] 
-      
     end
 
     if params[:ratings] != session[:ratings]
       session[:ratings] = @checked_ratings
+      redir = true
     end
-
+    
+    if redir
+      redirect_to :sort => @sort, :ratings => @checked_ratings
+      return
+    end
     
     @movies = Movie.where(rating: @checked_ratings.keys).order(@sort)
     
