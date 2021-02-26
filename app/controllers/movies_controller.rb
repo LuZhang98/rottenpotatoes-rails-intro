@@ -12,13 +12,16 @@ class MoviesController < ApplicationController
     @ratings_to_show = []
 
     if params[:ratings] == nil
-      @ratings_to_show = @all_r
-      
+      if session[:ratings] == nil
+        @ratings_to_show = @all_r
+      elsif params[:sort] != session[:sort]
+        @ratings_to_show = session[:ratings]
+      else
+        @ratings_to_show = @all_r
+      end
+
     elsif params[:ratings]
       @ratings_to_show = params[:ratings]
-      
-    else
-      @ratings_to_show = session[:ratings]
 
     end
 
