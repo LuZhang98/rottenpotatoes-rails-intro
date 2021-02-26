@@ -12,18 +12,18 @@ class MoviesController < ApplicationController
 
     if params[:ratings] == nil
       if session[:ratings] == nil
-        @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
+        @ratings_to_show = Hash[@all_ratings.map {|rating| [rating, rating]}]
       elsif params[:sort] != session[:sort]
-        @checked_ratings = session[:ratings]
+        @ratings_to_show = session[:ratings]
       else
-        @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
+        @ratings_to_show = Hash[@all_ratings.map {|rating| [rating, rating]}]
       end
 
     elsif params[:ratings]
-      @checked_ratings = params[:ratings]
+      @ratings_to_show = params[:ratings]
       
     else
-      @checked_ratings = session[:ratings]
+      @ratings_to_show = session[:ratings]
     end
 
     if params[:ratings] != session[:ratings]
@@ -55,7 +55,7 @@ class MoviesController < ApplicationController
     end
 
     
-    @movies = Movie.where(rating: @checked_ratings.keys).order(@sort)
+    @movies = Movie.where(rating: @ratings_to_show.keys).order(@sort)
     
   end
 
