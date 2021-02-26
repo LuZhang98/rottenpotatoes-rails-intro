@@ -14,7 +14,7 @@ class MoviesController < ApplicationController
       @sort == nil
     elsif params[:sort] != nil
       @sort = params[:sort]
-    elsif session[:sort] != nil
+    else
       @sort = session[:sort]
     end
     
@@ -40,7 +40,7 @@ class MoviesController < ApplicationController
     elsif params[:ratings] != nil
       @checked_ratings = params[:ratings]
       
-    elsif session[:ratings] != nil
+    else
       @checked_ratings = session[:ratings]
       
     end
