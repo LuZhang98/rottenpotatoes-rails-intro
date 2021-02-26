@@ -28,12 +28,7 @@ class MoviesController < ApplicationController
     if params[:ratings] != session[:ratings]
       session[:ratings] = @checked_ratings
     end
-    
-    if params[:sort] == session[:sort] && params[:ratings] == nil
-      @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
-    end
 
-    
 
     if params[:sort] == nil && session[:sort] == nil
       @sort == nil
