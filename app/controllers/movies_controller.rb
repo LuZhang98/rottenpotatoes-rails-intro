@@ -8,17 +8,17 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
-    redir = false
 
     if params[:sort] == nil && session[:sort] == nil
       @sort == nil
+    elsif params[:sort]
+      @sort = params[:sort]
     else
-      @sort = params[:sort] || session[:sort]
+      @sort = session[:sort]
     end
     
     if params[:sort] != session[:sort]
       session[:sort] = @sort
-      redir = true
     end
 
     if @sort == 'title'
@@ -35,18 +35,15 @@ class MoviesController < ApplicationController
     if params[:ratings] == nil && session[:ratings] == nil
       @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
 
+    elsif params[:ratings]
+      @checked_ratings = params[:ratings]
+      
     else
-      @checked_ratings = params[:ratings] || session[:ratings] 
+      @checked_ratings = session[:ratings]
     end
 
     if params[:ratings] != session[:ratings]
       session[:ratings] = @checked_ratings
-      redir = true
-    end
-    
-    if redir
-      redirect_to :sort => @sort, :ratings => @checked_ratings
-      return
     end
     
     @movies = Movie.where(rating: @checked_ratings.keys).order(@sort)
