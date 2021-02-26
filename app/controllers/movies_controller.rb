@@ -10,7 +10,13 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.all_ratings
 
     if params[:ratings] == nil
+      if session[:ratings] == nil
         @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
+      elsif params[:sort] != session[:sort]
+        @checked_ratings = session[:ratings]
+      else
+        @checked_ratings = params[:ratings]
+      end
 
     elsif params[:ratings]
       @checked_ratings = params[:ratings]
