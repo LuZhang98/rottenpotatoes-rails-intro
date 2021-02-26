@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
 
     if params[:sort] == nil && session[:sort] == nil
       @sort == nil
-    elsif params[:sort] != nil
+    elsif params[:sort]
       @sort = params[:sort]
     else
       @sort = session[:sort]
@@ -37,7 +37,7 @@ class MoviesController < ApplicationController
     if params[:ratings] == nil
       @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
 
-    elsif params[:ratings] != nil
+    elsif params[:ratings]
       @checked_ratings = params[:ratings]
       
     else
