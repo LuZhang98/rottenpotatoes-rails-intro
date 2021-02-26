@@ -9,6 +9,21 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.all_ratings
 
+    if params[:ratings] == nil
+        @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
+
+    elsif params[:ratings]
+      @checked_ratings = params[:ratings]
+      
+    else
+      @checked_ratings = session[:ratings]
+    end
+
+    if params[:ratings] != session[:ratings]
+      session[:ratings] = @checked_ratings
+    end
+    
+
     if params[:sort] == nil && session[:sort] == nil
       @sort == nil
     elsif params[:sort]
@@ -31,20 +46,7 @@ class MoviesController < ApplicationController
       @date_header = 'hilite'
       @date_header = "bg-warning"
     end
-    
-    if params[:ratings] == nil
-        @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
 
-    elsif params[:ratings]
-      @checked_ratings = params[:ratings]
-      
-    else
-      @checked_ratings = session[:ratings]
-    end
-
-    if params[:ratings] != session[:ratings]
-      session[:ratings] = @checked_ratings
-    end
     
     @movies = Movie.where(rating: @checked_ratings.keys).order(@sort)
     
