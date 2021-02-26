@@ -32,7 +32,7 @@ class MoviesController < ApplicationController
       @date_header = "bg-warning"
     end
     
-    if params[:ratings] == nil
+    if params[:ratings] == nil && session[:ratings] == nil
       @checked_ratings = Hash[@all_ratings.map {|rating| [rating, rating]}]
 
     else
