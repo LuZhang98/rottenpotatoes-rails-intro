@@ -22,9 +22,7 @@ class MoviesController < ApplicationController
 
     elsif params[:ratings]
       @ratings_to_show = params[:ratings]
-      
-    else
-      @ratings_to_show = session[:ratings]
+
     end
 
     if params[:ratings] != session[:ratings]
