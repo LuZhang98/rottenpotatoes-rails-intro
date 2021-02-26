@@ -50,10 +50,7 @@ class MoviesController < ApplicationController
       redir = true
     end
     
-    if redir
-      redirect_to :sort => @sort, :ratings => @checked_ratings
-      return
-    end
+
     
     @movies = Movie.where(rating: @checked_ratings.keys).order(@sort)
     
